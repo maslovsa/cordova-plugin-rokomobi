@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        id="com.rokolabs.rokomobi"
+        version="0.0.1">
+
+  <name>RokoMobi</name>
+
+  <engines>
+    <engine name="cordova" version=">=3.4.0"/>
+  </engines>
+
+  <asset src="www/rokomobi.js" target="js/rokomobi.js"/>
+
+  <js-module src="www/rokomobi.js" name="rokomobi">
+    <clobbers target="rokomobi" />
+  </js-module>
+
+  <platform name="android">
+
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="Hello">
+        <param name="android-package" value="com.example.plugin.Hello"/>
+      </feature>
+    </config-file>
+
+    <source-file src="src/android/Hello.java" target-dir="src/com/example/plugin/"/>
+  </platform>
+
+  <platform name="ios">
+    
+    <config-file target="config.xml" parent="/widget">
+     
+      <feature name="LinkManager">
+        <param name="ios-package" value="RMPLinkManager" />
+      </feature>
+      <feature name="ShareManager">
+        <param name="ios-package" value="RMPShareManager" />
+      </feature>
+      <feature name="LoggerManager">
+        <param name="ios-package" value="RMPLoggerManager" />
+      </feature>
+      <feature name="PromoManager">
+        <param name="ios-package" value="RMPPromoManager" />
+      </feature>
+      <feature name="ReferralManager">
+        <param name="ios-package" value="RMPReferralManager" />
+      </feature>
+      <feature name="PortalManager">
+        <param name="ios-package" value="RMPPortalManager" />
+      </feature>
+
+    </config-file>
+
+    <header-file src="src/ios/RMPHelper.h" target-dir="RokoMobi"/>
+    <source-file src="src/ios/RMPHelper.m" target-dir="RokoMobi"/>
+    <header-file src="src/ios/RMPLinkManager.h" target-dir="RokoMobi"/>
+    <source-file src="src/ios/RMPLinkManager.m" target-dir="RokoMobi"/>
+    <header-file src="src/ios/RMPShareManager.h" target-dir="RokoMobi"/>
+    <source-file src="src/ios/RMPShareManager.m" target-dir="RokoMobi"/>
+    <header-file src="src/ios/RMPLoggerManager.h" target-dir="RokoMobi"/>
+    <source-file src="src/ios/RMPLoggerManager.m" target-dir="RokoMobi"/>
+    <header-file src="src/ios/RMPPromoManager.h" target-dir="RokoMobi"/>
+    <source-file src="src/ios/RMPPromoManager.m" target-dir="RokoMobi"/>
+    <header-file src="src/ios/RMPReferralManager.h" target-dir="RokoMobi"/>
+    <source-file src="src/ios/RMPReferralManager.m" target-dir="RokoMobi"/>
+    <header-file src="src/ios/RMPPortalManager.h" target-dir="RokoMobi"/>
+    <source-file src="src/ios/RMPPortalManager.m" target-dir="RokoMobi"/>
+
+    <header-file src="src/ios/Mappers/ROKOLink+ROKOLinkMapper.h" target-dir="RokoMobi/Mappers"/>
+    <source-file src="src/ios/Mappers/ROKOLink+ROKOLinkMapper.m" target-dir="RokoMobi/Mappers"/>
+    <header-file src="src/ios/Mappers/ROKODiscountItem+ROKODiscountItemMapper.h" target-dir="RokoMobi/Mappers"/>
+    <source-file src="src/ios/Mappers/ROKODiscountItem+ROKODiscountItemMapper.m" target-dir="RokoMobi/Mappers"/>
+    <header-file src="src/ios/Mappers/ROKOPromoDiscountItem+ROKOPromoDiscountItemMapper.h" target-dir="RokoMobi/Mappers"/>
+    <source-file src="src/ios/Mappers/ROKOPromoDiscountItem+ROKOPromoDiscountItemMapper.m" target-dir="RokoMobi/Mappers"/>
+    <header-file src="src/ios/Mappers/ROKOReferralDiscountItem+ROKOReferralDiscountItemMapper.h" target-dir="RokoMobi/Mappers"/>
+    <source-file src="src/ios/Mappers/ROKOReferralDiscountItem+ROKOReferralDiscountItemMapper.m" target-dir="RokoMobi/Mappers"/>
+    <header-file src="src/ios/Mappers/ROKOReferralDiscountInfo+ROKOReferralDiscountInfoMapper.h" target-dir="RokoMobi/Mappers"/>
+    <source-file src="src/ios/Mappers/ROKOReferralDiscountInfo+ROKOReferralDiscountInfoMapper.m" target-dir="RokoMobi/Mappers"/>
+    <header-file src="src/ios/Mappers/ROKOReferralCampaignInfo+ROKOReferralCampaignInfoMapper.h" target-dir="RokoMobi/Mappers"/>
+    <source-file src="src/ios/Mappers/ROKOReferralCampaignInfo+ROKOReferralCampaignInfoMapper.m" target-dir="RokoMobi/Mappers"/>
+
+    <header-file src="src/ios/Mappers/ROKOPortalInfo+ROKOPortalInfoMapper.h" target-dir="RokoMobi/Mappers"/>
+    <source-file src="src/ios/Mappers/ROKOPortalInfo+ROKOPortalInfoMapper.m" target-dir="RokoMobi/Mappers"/>
+    <header-file src="src/ios/Mappers/ROKOUserObject+ROKOUserObjectMapper.h" target-dir="RokoMobi/Mappers"/>
+    <source-file src="src/ios/Mappers/ROKOUserObject+ROKOUserObjectMapper.m" target-dir="RokoMobi/Mappers"/>
+    <header-file src="src/ios/Mappers/ROKOSessionInfo+ROKOSessionInfoMapper.h" target-dir="RokoMobi/Mappers"/>
+    <source-file src="src/ios/Mappers/ROKOSessionInfo+ROKOSessionInfoMapper.m" target-dir="RokoMobi/Mappers"/>
+
+    <header-file src="src/ios/EasyMapping/EasyMapping.h" target-dir="RokoMobi/EasyMapping"/>
+    <header-file src="src/ios/EasyMapping/EKCoreDataImporter.h" target-dir="RokoMobi/EasyMapping"/>
+    <source-file src="src/ios/EasyMapping/EKCoreDataImporter.m" target-dir="RokoMobi/EasyMapping"/>
+    <header-file src="src/ios/EasyMapping/EKManagedObjectMapper.h" target-dir="RokoMobi/EasyMapping"/>
+    <source-file src="src/ios/EasyMapping/EKManagedObjectMapper.m" target-dir="RokoMobi/EasyMapping"/>
+
+    <header-file src="src/ios/EasyMapping/EKManagedObjectMapping.h" target-dir="RokoMobi/EasyMapping"/>
+    <source-file src="src/ios/EasyMapping/EKManagedObjectMapping.m" target-dir="RokoMobi/EasyMapping"/>
+
+    <header-file src="src/ios/EasyMapping/EKManagedObjectModel.h" target-dir="RokoMobi/EasyMapping"/>
+    <source-file src="src/ios/EasyMapping/EKManagedObjectModel.m" target-dir="RokoMobi/EasyMapping"/>
+
+    <header-file src="src/ios/EasyMapping/EKMapper.h" target-dir="RokoMobi/EasyMapping"/>
+    <source-file src="src/ios/EasyMapping/EKMapper.m" target-dir="RokoMobi/EasyMapping"/>
+
+    <header-file src="src/ios/EasyMapping/EKMappingBlocks.h" target-dir="RokoMobi/EasyMapping"/>
+    <source-file src="src/ios/EasyMapping/EKMappingBlocks.m" target-dir="RokoMobi/EasyMapping"/>
+
+    <header-file src="src/ios/EasyMapping/EKMappingProtocol.h" target-dir="RokoMobi/EasyMapping"/>
+
+    <header-file src="src/ios/EasyMapping/EKObjectMapping.h" target-dir="RokoMobi/EasyMapping"/>
+    <source-file src="src/ios/EasyMapping/EKObjectMapping.m" target-dir="RokoMobi/EasyMapping"/>
+
+    <header-file src="src/ios/EasyMapping/EKObjectModel.h" target-dir="RokoMobi/EasyMapping"/>
+    <source-file src="src/ios/EasyMapping/EKObjectModel.m" target-dir="RokoMobi/EasyMapping"/>
+
+    <header-file src="src/ios/EasyMapping/EKPropertyHelper.h" target-dir="RokoMobi/EasyMapping"/>
+    <source-file src="src/ios/EasyMapping/EKPropertyHelper.m" target-dir="RokoMobi/EasyMapping"/>
+
+    <header-file src="src/ios/EasyMapping/EKPropertyMapping.h" target-dir="RokoMobi/EasyMapping"/>
+    <source-file src="src/ios/EasyMapping/EKPropertyMapping.m" target-dir="RokoMobi/EasyMapping"/>
+
+    <header-file src="src/ios/EasyMapping/EKRelationshipMapping.h" target-dir="RokoMobi/EasyMapping"/>
+    <source-file src="src/ios/EasyMapping/EKRelationshipMapping.m" target-dir="RokoMobi/EasyMapping"/>
+
+    <header-file src="src/ios/EasyMapping/EKSerializer.h" target-dir="RokoMobi/EasyMapping"/>
+    <source-file src="src/ios/EasyMapping/EKSerializer.m" target-dir="RokoMobi/EasyMapping"/>
+
+    <header-file src="src/ios/EasyMapping/NSArray+FlattenArray.h" target-dir="RokoMobi/EasyMapping"/>
+    <source-file src="src/ios/EasyMapping/NSArray+FlattenArray.m" target-dir="RokoMobi/EasyMapping"/>
+
+    <header-file src="src/ios/EasyMapping/NSDateFormatter+EasyMappingAdditions.h" target-dir="RokoMobi/EasyMapping"/>
+    <source-file src="src/ios/EasyMapping/NSDateFormatter+EasyMappingAdditions.m" target-dir="RokoMobi/EasyMapping"/>
+
+    <framework src="src/ios/Frameworks/ROKOMobi.framework" custom="true" />
+
+  </platform>
+
+  <platform name="wp7">
+    <source-file src="src/wp7/Hello.cs"/>
+  </platform>
+
+</plugin>
