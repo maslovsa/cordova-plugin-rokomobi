@@ -16,6 +16,10 @@ module.exports = {
     share: function (param, successCallback, errorCallback, settings) {
         cordova.exec(successCallback, errorCallback, "ShareManager", "share", [settings || RokoMobiSettings, param]);
     },
+    // Param - "displayMessage", "text", "contentTitle", "contentURL", "ShareChannelTypeFacebook" (and other text fo different Sharing Types)
+    shareWithUI: function (param, successCallback, errorCallback, settings) {
+        cordova.exec(successCallback, errorCallback, "ShareManager", "shareWithUI", [settings || RokoMobiSettings, param]);
+    },
     // Param - "name", "params"-Dictionary
     addEvent: function (param, successCallback, errorCallback, settings) {
         cordova.exec(successCallback, errorCallback, "LoggerManager", "addEvent", [settings || RokoMobiSettings, param]);
@@ -74,6 +78,10 @@ module.exports = {
     // Param - Empty, Success - ["objectId", "createDate", "email", "firstLoginTime", "lastLoginTime", "phone", "photoFile", "referralCode", "updateDate", "username"
     getUserInfo: function (param, successCallback, errorCallback, settings) {
         cordova.exec(successCallback, errorCallback, "PortalManager", "getUserInfo", [settings || RokoMobiSettings, param]);
+    },
+    // Param - Sring of push data, Success - promoCode
+    promoCodeFromNotification: function (param, successCallback, errorCallback, settings) {
+        cordova.exec(successCallback, errorCallback, "PushManager", "promoCodeFromNotification", [settings || RokoMobiSettings, param]);
     },
     ROKOLinkType: {
         ROKOLinkTypeManual: 0,

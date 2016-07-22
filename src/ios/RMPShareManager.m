@@ -3,8 +3,13 @@
 #import <ROKOMobi/ROKOMobi.h>
 #import <ROKOMobi/ROKOShareViewController.h>
 
-@interface RMPShareManager () <ROKOShareDelegate> {
+NSString *const kDisplayMessageKey = @"displayMessage";
+NSString *const kContentTitleKey = @"contentTitle";
+NSString *const kContentIdKey = @"contentId";
+NSString *const kChannelTypeKey = @"channelType";
 
+@interface RMPShareManager () <ROKOShareDelegate> {
+    ROKOShare *_shareManager;
 }
 @end
 
@@ -12,53 +17,80 @@
 
 - (void)pluginInitialize {
     [super pluginInitialize];
+    _shareManager = [[ROKOShare alloc] init];
+    _shareManager.delegate = self;
 }
 
 - (void)share:(CDVInvokedUrlCommand *)command {
+    [self share:command andUI:NO];
+}
+
+- (void)shareWithUI:(CDVInvokedUrlCommand *)command {
+    [self share:command andUI:YES];
+}
+
+- (void)share:(CDVInvokedUrlCommand *)command andUI:(BOOL)usingUI {
     BOOL isParseOk = [self parseCommand:command];
     
     if (isParseOk) {
         NSDictionary *params = command.arguments.count == 2 ? command.arguments[1] : nil;
         
         if (params) {
-            ROKOShareViewController *controller = [ROKOShareViewController buildControllerWithContentId:[[NSUUID UUID] UUIDString]];
-            ROKOShare *shareManager = controller.shareManager;
-            shareManager.delegate = self;
-            
-            if (params[@"displayMessage"]) {
-                controller.displayMessage = params[@"displayMessage"];
-            }
-            
             if (params[@"text"]) {
-                shareManager.text = params[@"text"];
+                _shareManager.text = params[@"text"];
             }
             
-            if (params[@"contentTitle"]) {
-                shareManager.contentTitle = params[@"contentTitle"];
+            if (params[kContentTitleKey]) {
+                _shareManager.contentTitle = params[kContentTitleKey];
             }
             
             id url = params[@"contentURL"];
             
             if (url && url != [NSNull null] && [url isKindOfClass:[NSURL class]]) {
-                shareManager.contentURL = params[@"contentURL"];
+                _shareManager.contentURL = params[@"contentURL"];
             }
             
             if (params[@"ShareChannelTypeFacebook"]) {
-                [shareManager setText:params[@"ShareChannelTypeFacebook"] forShareChannel:ROKOShareChannelTypeFacebook];
+                [_shareManager setText:params[@"ShareChannelTypeFacebook"] forShareChannel:ROKOShareChannelTypeFacebook];
             }
             
             if (params[@"ShareChannelTypeTwitter"]) {
-                [shareManager setText:params[@"ShareChannelTypeTwitter"] forShareChannel:ROKOShareChannelTypeTwitter];
+                [_shareManager setText:params[@"ShareChannelTypeTwitter"] forShareChannel:ROKOShareChannelTypeTwitter];
             }
             
             if (params[@"ShareChannelTypeMessage"]) {
-                [shareManager setText:params[@"ShareChannelTypeMessage"] forShareChannel:ROKOShareChannelTypeMessage];
+                [_shareManager setText:params[@"ShareChannelTypeMessage"] forShareChannel:ROKOShareChannelTypeMessage];
             }
             
-            [self.viewController presentViewController:controller animated:YES completion:nil];
+            
+            if (usingUI) {
+                ROKOShareViewController *controller = [ROKOShareViewController buildControllerWithContentId:[[NSUUID UUID] UUIDString]];
+                
+                if (params[kDisplayMessageKey]) {
+                    controller.displayMessage = params[kDisplayMessageKey];
+                }
+                controller.shareManager = _shareManager;
+                [self.viewController presentViewController:controller animated:YES completion:nil];
+            } else {
+                ROKOShareChannelType channelType = ROKOShareChannelTypeUnknown;
+                NSString *channelTypeString = params[kChannelTypeKey];
+                if (channelTypeString) {
+                    channelType = [self shareChannelType: channelTypeString];
+                }
+                NSString *contentIdString = params[kContentIdKey];
+                if (contentIdString) {
+                    _shareManager.contentId = contentIdString;
+                } else {
+                    _shareManager.contentId = [[NSUUID UUID] UUIDString];
+                }
+                
+                _shareManager.presentingController = self.viewController;
+                [_shareManager shareWithChannelType: channelType];
+            }
         }
     }
 }
+
 
 - (void)shareWithChannelType:(CDVInvokedUrlCommand *)command {
 
@@ -92,4 +124,26 @@
 
 }
 
+
+-(ROKOShareChannelType)shareChannelType:(NSString*)channelType{
+    if ([channelType isEqualToString:@"sms"]) {
+        return ROKOShareChannelTypeMessage;
+    }
+    
+    if ([channelType isEqualToString:@"twitter"]) {
+        return ROKOShareChannelTypeTwitter;
+    }
+    
+    if ([channelType isEqualToString:@"facebook"]) {
+        return ROKOShareChannelTypeFacebook;
+    }
+    
+    if ([channelType isEqualToString:@"email"]) {
+        return ROKOShareChannelTypeEmail;
+    }
+    if ([channelType isEqualToString:@"copy"]) {
+        return ROKOShareChannelTypeCopy;
+    }
+    return ROKOShareChannelTypeUnknown;
+}
 @end
