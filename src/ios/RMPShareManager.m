@@ -30,10 +30,8 @@ NSString *const kChannelTypeKey = @"channelType";
 }
 
 - (void)share:(CDVInvokedUrlCommand *)command andUI:(BOOL)usingUI {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
-        NSDictionary *params = command.arguments.count == 2 ? command.arguments[1] : nil;
+[self parseCommand:command];
+        NSDictionary *params = command.arguments[0];
         
         if (params) {
             if (params[@"text"]) {
@@ -88,7 +86,7 @@ NSString *const kChannelTypeKey = @"channelType";
                 [_shareManager shareWithChannelType: channelType];
             }
         }
-    }
+
 }
 
 

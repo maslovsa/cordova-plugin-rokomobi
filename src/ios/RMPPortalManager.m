@@ -26,62 +26,55 @@ NSString *const kLinkShareChannel = @"linkShareChannel";
 }
 
 - (void)login:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
-        NSDictionary *params = command.arguments.count == 2 ? command.arguments[1] : nil;
+    [self parseCommand:command];
+    NSDictionary *params = command.arguments[0];
+
+    if (params) {
+        __weak __typeof__(self) weakSelf = self;
         
-        if (params) {
-            __weak __typeof__(self) weakSelf = self;
-            
-            NSString *userName = params[kUserNameKey];
-            NSString *password = params[kPasswordKey];
-            
-            if (userName && password) {
-                [_portalManager loginWithUser:userName andPassword:password completionBlock:^(NSError *_Nullable error) {
-                    if (error) {
-                        [weakSelf handleError:error];
-                    } else {
-                        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Login Successful"];
-                        [weakSelf.commandDelegate sendPluginResult:result callbackId:weakSelf.command.callbackId];
-                    }
-                }];
-            }
+        NSString *userName = params[kUserNameKey];
+        NSString *password = params[kPasswordKey];
+        
+        if (userName && password) {
+            [_portalManager loginWithUser:userName andPassword:password completionBlock:^(NSError *_Nullable error) {
+                if (error) {
+                    [weakSelf handleError:error];
+                } else {
+                    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Login Successful"];
+                    [weakSelf.commandDelegate sendPluginResult:result callbackId:weakSelf.command.callbackId];
+                }
+            }];
         }
     }
 }
 
 - (void)setUser:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
-        NSDictionary *params = command.arguments.count == 2 ? command.arguments[1] : nil;
+    [self parseCommand:command];
+    NSDictionary *params = command.arguments[0];
+
+    if (params) {
+        __weak __typeof__(self) weakSelf = self;
         
-        if (params) {
-            __weak __typeof__(self) weakSelf = self;
-            
-            NSString *userName = params[kUserNameKey];
-            NSString *referralCode = params[kReferralCodeKey];
-            NSString *shareChannel = params[kShareChannelKey];
-            
-            if (userName) {
-                [_portalManager setUserWithName:userName referralCode:referralCode linkShareChannel:shareChannel completionBlock:^void (NSError *__nullable error) {
-                    if (error) {
-                        [weakSelf handleError:error];
-                    } else {
-                        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Set User Successful"];
-                        [weakSelf.commandDelegate sendPluginResult:result callbackId:weakSelf.command.callbackId];
-                    }
-                }];
-            }
+        NSString *userName = params[kUserNameKey];
+        NSString *referralCode = params[kReferralCodeKey];
+        NSString *shareChannel = params[kShareChannelKey];
+        
+        if (userName) {
+            [_portalManager setUserWithName:userName referralCode:referralCode linkShareChannel:shareChannel completionBlock:^void (NSError *__nullable error) {
+                if (error) {
+                    [weakSelf handleError:error];
+                } else {
+                    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Set User Successful"];
+                    [weakSelf.commandDelegate sendPluginResult:result callbackId:weakSelf.command.callbackId];
+                }
+            }];
         }
     }
+
 }
 
 - (void)logout:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
+[self parseCommand:command];
         __weak __typeof__(self) weakSelf = self;
         
         [_portalManager logoutWithCompletionBlock:^(NSError *_Nullable error) {
@@ -92,14 +85,12 @@ NSString *const kLinkShareChannel = @"linkShareChannel";
                 [weakSelf.commandDelegate sendPluginResult:result callbackId:weakSelf.command.callbackId];
             }
         }];
-    }
+
 }
 
 - (void)signupUser:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
-        NSDictionary *params = command.arguments.count == 2 ? command.arguments[1] : nil;
+[self parseCommand:command];
+        NSDictionary *params = command.arguments[0];
         
         if (params) {
             __weak __typeof__(self) weakSelf = self;
@@ -121,13 +112,11 @@ NSString *const kLinkShareChannel = @"linkShareChannel";
                 }];
             }
         }
-    }
+
 }
 
 - (void)getPortalInfo:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
+[self parseCommand:command];
         __weak __typeof__(self) weakSelf = self;
         
         [_portalManager getPortalInfoWithCompletionBlock:^(ROKOPortalInfo *_Nullable info, NSError *_Nullable error) {
@@ -140,13 +129,10 @@ NSString *const kLinkShareChannel = @"linkShareChannel";
                 
             }
         }];
-    }
 }
 
 - (void)getSessionInfo:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
+[self parseCommand:command];
         __weak __typeof__(self) weakSelf = self;
         
         [_portalManager getSessionInfoWithCompletionBlock:^(ROKOSessionInfo *_Nullable info, NSError *_Nullable error) {
@@ -159,13 +145,11 @@ NSString *const kLinkShareChannel = @"linkShareChannel";
                 
             }
         }];
-    }
+
 }
 
 - (void)getUserInfo:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
+[self parseCommand:command];
         ROKOUserObject *userInfo = [_portalManager userInfo];
 
         if (userInfo) {
@@ -176,6 +160,5 @@ NSString *const kLinkShareChannel = @"linkShareChannel";
             CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"No user"];
             [self.commandDelegate sendPluginResult:result callbackId:self.command.callbackId];
         }
-    }
 }
 @end

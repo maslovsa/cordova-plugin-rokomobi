@@ -26,59 +26,53 @@ NSString *const kLinkIdKey = @"linkId";
 }
 
 - (void)handleDeepLink:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
+    [self parseCommand:command];
+    NSString *link = command.arguments[0];
     
-    if (isParseOk) {
-        NSString *link = command.arguments.count == 2 ? command.arguments[1] : nil;
+    if (link) {
+        NSURL *nsurl = [[NSURL alloc] initWithString:link];
         
-        if (link) {
-            NSURL *nsurl = [[NSURL alloc] initWithString:link];
-            
-            if (nsurl) {
-                _linkManager.delegate = self;
-                [_linkManager handleDeepLink:nsurl];
-            }
+        if (nsurl) {
+            _linkManager.delegate = self;
+            [_linkManager handleDeepLink:nsurl];
         }
     }
 }
 
 - (void)createLink:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
-        NSDictionary *params = command.arguments.count == 2 ? command.arguments[1] : nil;
+    [self parseCommand:command];
+    NSDictionary *params = command.arguments[0];
+
+    if (params) {
+        _linkManager.delegate = self;
+        __weak __typeof__(self) weakSelf = self;
         
-        if (params) {
-        
-            _linkManager.delegate = self;
-            __weak __typeof__(self) weakSelf = self;
-            
-            [_linkManager createLinkWithName:params[kNameKey]
-             type:[params[kTypeKey] intValue]
-             sourceURL:params[kSourceURLKey]
-             channelName:params[kChannelNameKey]
-             sharingCode:params[kSharingCodeKey]
-             advancedSettings:params[kAdvancedSettingsKey]
-             completionBlock:^(NSString *_Nullable linkURL, NSNumber *_Nullable linkId, NSError *_Nullable error) {
-                if (error) {
-                    [weakSelf handleError:error];
-                } else {
-                    NSMutableDictionary *dictionary = [NSMutableDictionary new];
-                    
-                    if (linkURL) {
-                        dictionary[kLinkURLKey] = linkURL;
-                    }
-                    
-                    if (linkId) {
-                        dictionary[kLinkIdKey] = linkId;
-                    }
-                    
-                    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dictionary];
-                    [weakSelf.commandDelegate sendPluginResult:result callbackId:weakSelf.command.callbackId];
+        [_linkManager createLinkWithName:params[kNameKey]
+         type:[params[kTypeKey] intValue]
+         sourceURL:params[kSourceURLKey]
+         channelName:params[kChannelNameKey]
+         sharingCode:params[kSharingCodeKey]
+         advancedSettings:params[kAdvancedSettingsKey]
+         completionBlock:^(NSString *_Nullable linkURL, NSNumber *_Nullable linkId, NSError *_Nullable error) {
+            if (error) {
+                [weakSelf handleError:error];
+            } else {
+                NSMutableDictionary *dictionary = [NSMutableDictionary new];
+                
+                if (linkURL) {
+                    dictionary[kLinkURLKey] = linkURL;
                 }
-            }];
-        }
+                
+                if (linkId) {
+                    dictionary[kLinkIdKey] = linkId;
+                }
+                
+                CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dictionary];
+                [weakSelf.commandDelegate sendPluginResult:result callbackId:weakSelf.command.callbackId];
+            }
+        }];
     }
+
 }
 
 - (void)linkManager:(nonnull ROKOLinkManager *)manager didOpenDeepLink:(nonnull ROKOLink *)link {

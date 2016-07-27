@@ -17,23 +17,7 @@ NSString *const kApiTokenKey = @"apiToken";
 
 - (BOOL)parseCommand:(CDVInvokedUrlCommand *)command {
     self.command = command;
-    
-    if ([command arguments].count > 1) {
-        NSDictionary *settings = [command arguments][0];
-        
-        NSString *baseURL = settings[kBaseURLKey];
-        NSString *apiToken = settings[kApiTokenKey];
-        
-        if (baseURL && apiToken) {
-            [ROKOComponentManager sharedManager].apiToken = apiToken;
-            [ROKOComponentManager sharedManager].baseURL = baseURL;
-            return YES;
-        }
-    }
-    
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:kRokoErrorBadCredentals];
-    [self.commandDelegate sendPluginResult:result callbackId:self.command.callbackId];
-    return NO;
+    return YES;
 }
 
 - (ROKOLinkType)numberToROKOLinkType:(NSNumber *)linkType {

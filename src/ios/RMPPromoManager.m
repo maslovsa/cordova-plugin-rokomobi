@@ -20,10 +20,8 @@ NSString *const kDeliveryTypeKey = @"deliveryType";
 }
 
 - (void)loadPromo:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
-        NSString *promoCode = command.arguments.count == 2 ? command.arguments[1] : nil;
+[self parseCommand:command];
+        NSString *promoCode = command.arguments[0];
         
         if (promoCode) {
             NSLog(@"load Promocode - %@", promoCode);
@@ -40,14 +38,12 @@ NSString *const kDeliveryTypeKey = @"deliveryType";
                 }
             }];
         }
-    }
+
 }
 
 - (void)markPromoCodeAsUsed:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
-        NSDictionary *params = command.arguments.count == 2 ? command.arguments[1] : nil;
+[self parseCommand:command];
+        NSDictionary *params = command.arguments[0];
         
         if (params) {
             __weak __typeof__(self) weakSelf = self;
@@ -70,7 +66,7 @@ NSString *const kDeliveryTypeKey = @"deliveryType";
                 }];
             }
         }
-    }
+
 }
 
 @end

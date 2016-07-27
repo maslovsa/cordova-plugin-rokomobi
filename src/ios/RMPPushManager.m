@@ -14,10 +14,8 @@
 }
 
 - (void)promoCodeFromNotification:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
-        NSString *jsonString = command.arguments.count == 2 ? command.arguments[1] : nil;
+[self parseCommand:command];
+        NSString *jsonString =  command.arguments[0];
         
         if (jsonString) {
             NSData *data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
@@ -35,6 +33,12 @@
             CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Bad Param"];
             [self.commandDelegate sendPluginResult:result callbackId:self.command.callbackId];
         }
-    }
+
+}
+
+- (void)initPush:(CDVInvokedUrlCommand *)command {
+    [self parseCommand:command];
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: @"Ok"];
+    [self.commandDelegate sendPluginResult:result callbackId:self.command.callbackId];
 }
 @end

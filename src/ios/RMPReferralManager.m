@@ -16,9 +16,7 @@
 }
 
 - (void)loadReferralDiscountsList:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
+[self parseCommand:command];
         __weak __typeof__(self) weakSelf = self;
         
         ROKOReferral *referral = [[ROKOReferral alloc] init];
@@ -37,15 +35,12 @@
                 [weakSelf.commandDelegate sendPluginResult:result callbackId:weakSelf.command.callbackId];
             }
         }];
-        
-    }
+
 }
 
 - (void)markReferralDiscountAsUsed:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
-        NSNumber *discountId = command.arguments.count == 2 ? command.arguments[1] : nil;
+[self parseCommand:command];
+        NSNumber *discountId = command.arguments[0];
         
         if (discountId) {
             __weak __typeof__(self) weakSelf = self;
@@ -60,14 +55,12 @@
                 }
             }];
         }
-    }
+
 }
 
 - (void)loadDiscountInfoWithCode:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
-        NSString *code = command.arguments.count == 2 ? command.arguments[1] : nil;
+[self parseCommand:command];
+        NSString *code = command.arguments[0];
         
         if (code) {
             __weak __typeof__(self) weakSelf = self;
@@ -83,14 +76,12 @@
                 }
             }];
         }
-    }
+
 }
 
 - (void)activateDiscountWithCode:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
-        NSString *code = command.arguments.count == 2 ? command.arguments[1] : nil;
+[self parseCommand:command];
+        NSString *code = command.arguments[0];
         
         if (code) {
             __weak __typeof__(self) weakSelf = self;
@@ -105,14 +96,12 @@
                 }
             }];
         }
-    }
+
 }
 
 - (void)completeDiscountWithCode:(CDVInvokedUrlCommand *)command {
-    BOOL isParseOk = [self parseCommand:command];
-    
-    if (isParseOk) {
-        NSString *code = command.arguments.count == 2 ? command.arguments[1] : nil;
+[self parseCommand:command];
+        NSString *code = command.arguments[0];
         
         if (code) {
             __weak __typeof__(self) weakSelf = self;
@@ -129,7 +118,7 @@
                 }
             }];
         }
-    }
+
 }
 
 @end
