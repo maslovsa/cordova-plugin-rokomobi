@@ -121,4 +121,13 @@
 
 }
 
+- (void)inviteFriends:(CDVInvokedUrlCommand *)command {
+    [self parseCommand:command];
+
+    ROKOInviteFriendsViewController* inviteFriendsController = [ROKOInviteFriendsViewController buildController];
+    [self.viewController presentViewController:inviteFriendsController animated:YES completion:nil];
+
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Referral discount has been marked as used. Please refresh view."];
+    [self.commandDelegate sendPluginResult:result callbackId:self.command.callbackId];
+}
 @end

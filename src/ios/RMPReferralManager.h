@@ -12,4 +12,6 @@
 - (void)activateDiscountWithCode:(CDVInvokedUrlCommand *)command;
 
 - (void)completeDiscountWithCode:(CDVInvokedUrlCommand *)command;
+
+- (void)inviteFriends:(CDVInvokedUrlCommand *)command;
 @end

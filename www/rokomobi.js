@@ -8,7 +8,7 @@ module.exports = {
     createLink: function (param, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "LinkManager", "createLink", [param]);
     },
-    // Param - "displayMessage", "text", "contentTitle", "contentURL", "ShareChannelTypeFacebook" (and other text fo different Sharing Types)
+    // Param - "displayMessage", "text", "contentId", contentTitle", "contentURL", "ShareChannelTypeFacebook" (and other text fo different Sharing Types)
     share: function (param, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "ShareManager", "share", [param]);
     },
@@ -47,6 +47,10 @@ module.exports = {
     // Param - "code", Sucess - "discountId", "referrerId"
     completeDiscountWithCode: function (param, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "ReferralManager", "completeDiscountWithCode", [param]);
+    },
+    // Param - Empty, Sucess - always
+    inviteFriends: function (param, successCallback, errorCallback) {
+        cordova.exec(successCallback, errorCallback, "ReferralManager", "inviteFriends", [param]);
     },
     // Param - "userName", "password"
     login: function (param, successCallback, errorCallback) {
