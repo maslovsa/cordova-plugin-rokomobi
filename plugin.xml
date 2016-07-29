@@ -15,16 +15,89 @@
     <clobbers target="rokomobi" />
   </js-module>
 
-  <platform name="android">
-
+<platform name="android">
+    
     <config-file target="res/xml/config.xml" parent="/*">
-      <feature name="Hello">
-        <param name="android-package" value="com.example.plugin.Hello"/>
-      </feature>
+        <feature name="LoggerManager">
+            <param name="android-package" value="com.rokolabs.rokomobi.analytics.RMLoggerManager"/>
+        </feature>
+        <feature name="PortalManager">
+            <param name="android-package" value="com.rokolabs.rokomobi.PortalManager"/>
+        </feature>
+        <feature name="PushManager">
+            <param name="android-package" value="com.rokolabs.rokomobi.push.PushPlugin"/>
+        </feature>
     </config-file>
-
-    <source-file src="src/android/Hello.java" target-dir="src/com/example/plugin/"/>
-  </platform>
+    <!--ANALYTICS SECTION START-->
+    <source-file src="src/android/com/rokolabs/rokomobi/analytics/RMLoggerManager.java" target-dir="src/com/rokolabs/rokomobi/analytics/"/>
+    <source-file src="src/android/com/rokolabs/rokomobi/analytics/Event.java" target-dir="src/com/rokolabs/rokomobi/analytics/"/>
+    <!--ANALYTICS SECTION END-->
+    <!--BASE SECTION START-->
+    <source-file src="src/android/com/rokolabs/rokomobi/base/BasePlugin.java" target-dir="src/com/rokolabs/rokomobi/base/"/>
+    <source-file src="src/android/com/rokolabs/rokomobi/base/Settings.java" target-dir="src/com/rokolabs/rokomobi/base/"/>
+    <source-file src="src/android/com/rokolabs/rokomobi/base/User.java" target-dir="src/com/rokolabs/rokomobi/base/"/>
+    <!--BASE SECTION END-->
+    <!--PORTAL MANAGER SECTION START-->
+    <source-file src="src/android/com/rokolabs/rokomobi/PortalManager.java" target-dir="src/com/rokolabs/rokomobi/"/>
+    <!--PORTAL MANAGER SECTION END-->
+    <!--PUSH SECTION START-->
+    <source-file src="src/android/com/rokolabs/rokomobi/push/PushActivityHandler.java" target-dir="src/com/rokolabs/rokomobi/push"/>
+    <source-file src="src/android/com/rokolabs/rokomobi/push/PushPlugin.java" target-dir="src/com/rokolabs/rokomobi/push"/>
+    
+    <!--PUSH SECTION END-->
+    
+    
+    
+    <resource-file src="libs/RokoMobi.aar" target="libs/RokoMobi.aar" />
+    <framework src="src/android/rokomobi.gradle" custom="true" type="gradleReference" />
+    
+    <hook type="before_compile" src="www/setupApplicationName.js"/>
+    
+    <framework src="com.android.support:appcompat-v7:23.4.0"/>
+    <framework src="com.google.code.gson:gson:2.7"/>
+    <framework src="com.google.android.gms:play-services-gcm:9.0.1"/>
+    <framework src="com.google.android.gms:play-services:9.0.1"/>
+    
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+        <uses-permission android:name="android.permission.WAKE_LOCK" />
+        <uses-permission android:name="android.permission.VIBRATE"/>
+        <uses-permission android:name="android.permission.INTERNET" />
+        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+        <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+        <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+        <permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+        <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
+    </config-file>
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+        <receiver
+            android:name="com.rokolabs.sdk.push.GCMReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter android:permission="com.google.android.c2dm.permission.SEND">
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                
+                <category android:name="com.rokolabs.mobitest" />
+            </intent-filter>
+            <intent-filter android:permission="com.google.android.c2dm.permission.SEND">
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                
+                <category android:name="com.rokolabs.mobitest" />
+            </intent-filter>
+        </receiver>
+        <service android:name="com.rokolabs.sdk.push.GCMIntentService" />
+        <activity
+            android:name="com.rokolabs.rokomobi.push.PushActivityHandler"
+            android:label="Push">
+            <intent-filter>
+                <action android:name="com.rokomobi.PUSH_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </config-file>
+    
+    
+</platform>
 
   <platform name="ios">
     
@@ -48,7 +121,9 @@
       <feature name="PortalManager">
         <param name="ios-package" value="RMPPortalManager" />
       </feature>
-
+      <feature name="PushManager">
+        <param name="ios-package" value="RMPPushManager" />
+      </feature>
     </config-file>
 
     <header-file src="src/ios/RMPHelper.h" target-dir="RokoMobi"/>
@@ -65,7 +140,8 @@
     <source-file src="src/ios/RMPReferralManager.m" target-dir="RokoMobi"/>
     <header-file src="src/ios/RMPPortalManager.h" target-dir="RokoMobi"/>
     <source-file src="src/ios/RMPPortalManager.m" target-dir="RokoMobi"/>
-
+    <header-file src="src/ios/RMPPushManager.h" target-dir="RokoMobi"/>
+    <source-file src="src/ios/RMPPushManager.m" target-dir="RokoMobi"/>
     <header-file src="src/ios/Mappers/ROKOLink+ROKOLinkMapper.h" target-dir="RokoMobi/Mappers"/>
     <source-file src="src/ios/Mappers/ROKOLink+ROKOLinkMapper.m" target-dir="RokoMobi/Mappers"/>
     <header-file src="src/ios/Mappers/ROKODiscountItem+ROKODiscountItemMapper.h" target-dir="RokoMobi/Mappers"/>
@@ -130,8 +206,8 @@
     <header-file src="src/ios/EasyMapping/NSDateFormatter+EasyMappingAdditions.h" target-dir="RokoMobi/EasyMapping"/>
     <source-file src="src/ios/EasyMapping/NSDateFormatter+EasyMappingAdditions.m" target-dir="RokoMobi/EasyMapping"/>
 
-    <framework src="src/ios/Frameworks/ROKOMobi.framework" custom="true" />
-
+    <framework src="src/ios/Frameworks/ROKOMobi.framework" custom="true"/>
+    <resource-file src="src/ios/Frameworks/ROKOMobi.framework/ROKOMobiResources.bundle"/>
   </platform>
 
   <platform name="wp7">
