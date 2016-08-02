@@ -24,7 +24,7 @@ public class PushPlugin extends BasePlugin {
     private static boolean gForeground = false;
 
     public static void sendJavascript(JSONObject _json) {
-       try {
+        try {
             String script = "javascript:" + "onRecievePushNotification" + "(" + _json.getJSONObject("payload").toString() + ")";
             if (gWebView != null) {
                 gWebView.sendJavascript(script);

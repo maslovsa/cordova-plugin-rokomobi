@@ -8,13 +8,13 @@ module.exports = {
     createLink: function (param, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "LinkManager", "createLink", [param]);
     },
-    // Param - "displayMessage", "text", "contentId", contentTitle", "contentURL", "ShareChannelTypeFacebook" (and other text fo different Sharing Types)
-    share: function (param, successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, "ShareManager", "share", [param]);
-    },
     // Param - "displayMessage", "text", "contentTitle", "contentURL", "ShareChannelTypeFacebook" (and other text fo different Sharing Types)
     shareWithUI: function (param, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "ShareManager", "shareWithUI", [param]);
+    },
+    //Param - "channelType" ["sms", "twitter", "facebook", "email", "copy"]
+    shareCompleteForChannel: function (param, successCallback, errorCallback){
+        cordova.exec(successCallback, errorCallback, "ShareManager", "shareCompleteForChannel",[param]);
     },
     // Param - "name", "params"-Dictionary
     addEvent: function (param, successCallback, errorCallback) {

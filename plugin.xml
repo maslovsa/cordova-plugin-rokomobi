@@ -16,7 +16,6 @@
   </js-module>
 
 <platform name="android">
-    
     <config-file target="res/xml/config.xml" parent="/*">
         <feature name="LoggerManager">
             <param name="android-package" value="com.rokolabs.rokomobi.analytics.RMLoggerManager"/>
@@ -26,6 +25,18 @@
         </feature>
         <feature name="PushManager">
             <param name="android-package" value="com.rokolabs.rokomobi.push.PushPlugin"/>
+        </feature>
+        <feature name="LinkManager">
+            <param name="android-package" value="com.rokolabs.rokomobi.link.LinkManager"/>
+        </feature>
+        <feature name="ShareManager">
+            <param name="android-package" value="com.rokolabs.rokomobi.share.ShareManager"/>
+        </feature>
+        <feature name="PromoManager">
+            <param name="android-package" value="com.rokolabs.rokomobi.promo.PromoManager"/>
+        </feature>
+        <feature name="ReferralManager">
+            <param name="android-package" value="com.rokolabs.rokomobi.referral.ReferralManager"/>
         </feature>
     </config-file>
     <!--ANALYTICS SECTION START-->
@@ -43,11 +54,27 @@
     <!--PUSH SECTION START-->
     <source-file src="src/android/com/rokolabs/rokomobi/push/PushActivityHandler.java" target-dir="src/com/rokolabs/rokomobi/push"/>
     <source-file src="src/android/com/rokolabs/rokomobi/push/PushPlugin.java" target-dir="src/com/rokolabs/rokomobi/push"/>
-    
     <!--PUSH SECTION END-->
-    
-    
-    
+    <!--LINK SECTION START-->
+    <source-file src="src/android/com/rokolabs/rokomobi/link/CreateLink.java" target-dir="src/com/rokolabs/rokomobi/link"/>
+    <source-file src="src/android/com/rokolabs/rokomobi/link/DeepLinkActivityHandler.java" target-dir="src/com/rokolabs/rokomobi/link"/>
+    <source-file src="src/android/com/rokolabs/rokomobi/link/LinkManager.java" target-dir="src/com/rokolabs/rokomobi/link"/>
+    <source-file src="src/android/com/rokolabs/rokomobi/link/ResultCreateLink.java" target-dir="src/com/rokolabs/rokomobi/link"/>
+    <!--LINK SECTION END-->
+    <!--SHARE SECTION START-->
+    <source-file src="src/android/com/rokolabs/rokomobi/share/ShareManager.java" target-dir="src/com/rokolabs/rokomobi/share"/>
+    <source-file src="src/android/com/rokolabs/rokomobi/share/ShareModel.java" target-dir="src/com/rokolabs/rokomobi/share"/>
+    <!--SHARE SECTION END-->
+    <!--PROMO SRCTION START-->
+    <source-file src="src/android/com/rokolabs/rokomobi/promo/PromoManager.java" target-dir="src/com/rokolabs/rokomobi/promo"/>
+    <source-file src="src/android/com/rokolabs/rokomobi/promo/MarkPromoCodeAsUsed.java" target-dir="src/com/rokolabs/rokomobi/promo"/>
+    <!--PROPMO SECTION END-->
+    <!--REFERRAL SECTION END-->
+    <source-file src="src/android/com/rokolabs/rokomobi/referral/Discount.java" target-dir="src/com/rokolabs/rokomobi/referral"/>
+    <source-file src="src/android/com/rokolabs/rokomobi/referral/ReferralManager.java" target-dir="src/com/rokolabs/rokomobi/referral"/>
+    <source-file src="src/android/com/rokolabs/rokomobi/referral/ResponseActivatedDiscount.java" target-dir="src/com/rokolabs/rokomobi/referral"/>
+    <!--REFERRAL SECTION END-->
+
     <resource-file src="libs/RokoMobi.aar" target="libs/RokoMobi.aar" />
     <framework src="src/android/rokomobi.gradle" custom="true" type="gradleReference" />
     
@@ -66,6 +93,7 @@
         <uses-permission android:name="android.permission.INTERNET" />
         <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
         <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+         <uses-permission android:name="android.permission.READ_CONTACTS" />
         <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
         <permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" android:protectionLevel="signature" />
         <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
@@ -92,6 +120,20 @@
             <intent-filter>
                 <action android:name="com.rokomobi.PUSH_ACTIVITY" />
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+          <activity
+            android:name="com.rokolabs.rokomobi.link.DeepLinkActivityHandler"
+            android:label="Deep Links">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="YOUR LINK"
+                    android:pathPrefix="/"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
     </config-file>

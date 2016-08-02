@@ -12,7 +12,7 @@ import org.apache.cordova.CordovaWebView;
 import org.json.JSONObject;
 
 public abstract class BasePlugin extends CordovaPlugin {
-    protected Gson gson = new Gson();
+    protected static Gson gson = new Gson();
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
