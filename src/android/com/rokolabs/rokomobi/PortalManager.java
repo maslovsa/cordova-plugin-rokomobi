@@ -40,8 +40,17 @@ public class PortalManager extends BasePlugin {
                 public void run() {
                     try {
                         User user = gson.fromJson(args.getJSONObject(0).toString(), User.class);
-                        RokoAccount.setUser(RokoMobi.getInstance().getApplicationContext(), user.userName, user.referralCode, user.shareChannel, null);
-                        callbackContext.success();
+                        RokoAccount.setUser(RokoMobi.getInstance().getApplicationContext(), user.userName, user.referralCode, user.shareChannel, new ResponseCallback() {
+                            @Override
+                            public void success(Response response) {
+                                callbackContext.success();
+                            }
+
+                            @Override
+                            public void failure(Response response) {
+                                callbackContext.error(response.code);
+                            }
+                        });
                     } catch (JSONException ex) {
                         callbackContext.error("Error parse json");
                     }
