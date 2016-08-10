@@ -7,5 +7,5 @@ public class Discount {
     public String name;
     public ResponseDiscount.Data.Discount recipientDiscount;
     public ResponseDiscount.Data.Discount rewardDiscount;
-
+    public ResponseDiscount.Data.User user;
 }

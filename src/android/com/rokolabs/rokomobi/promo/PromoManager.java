@@ -1,7 +1,6 @@
 package com.rokolabs.rokomobi.promo;
 
 import com.rokolabs.rokomobi.base.BasePlugin;
-import com.rokolabs.sdk.RokoMobi;
 import com.rokolabs.sdk.promo.ResponsePromo;
 import com.rokolabs.sdk.promo.RokoPromo;
 import com.rokolabs.sdk.promo.RokoPromoDeliveryType;
@@ -69,14 +68,26 @@ public class PromoManager extends BasePlugin {
                             }
                         });
                     } catch (JSONException ex) {
-
+                        callbackContext.error("Error parse");
                     }
                 }
             });
             return true;
         }
         if (promoCodeFromNotification.equals(action)) {
-            
+            cordova.getThreadPool().execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        PromoCodeFromNotificationModel model = gson.fromJson(args.getJSONObject(0).toString(), PromoCodeFromNotificationModel.class);
+                        JSONObject obj = new JSONObject();
+                        obj.put("promoCode",model.promoCode);
+                        callbackContext.success(obj);
+                    }catch (JSONException ex){
+                        callbackContext.error("Parse error");
+                    }
+                }
+            });
             return true;
         }
         return false;

@@ -100,6 +100,7 @@ public class ReferralManager extends BasePlugin {
                                 discount.name = responseDiscount.data.incentiveName;
                                 discount.recipientDiscount = responseDiscount.data.recipientDiscount;
                                 discount.rewardDiscount = responseDiscount.data.referralDiscount;
+                                discount.user = responseDiscount.data.referrerUser;
                                 callbackContext.success(gson.toJson(discount));
                             }
 
@@ -124,7 +125,7 @@ public class ReferralManager extends BasePlugin {
                         RokoReferrals.activateDiscountWithCode(code, new RokoReferrals.OnActivateDiscountWithCode() {
                             @Override
                             public void success(com.rokolabs.sdk.referrals.ResponseActivatedDiscount responseActivatedDiscount) {
-                                callbackContext.success(String.valueOf(responseActivatedDiscount.discount.data.objectId));
+                                callbackContext.success(String.valueOf(responseActivatedDiscount.data.discount.objectId));
                             }
 
                             @Override
@@ -167,7 +168,13 @@ public class ReferralManager extends BasePlugin {
             return true;
         }
         if (inviteFriends.equals(action)) {
-            RokoInviteFriends.show(cordova.getActivity());
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    RokoInviteFriends.show(cordova.getActivity());
+                }
+            });
+
             return true;
         }
         return false;

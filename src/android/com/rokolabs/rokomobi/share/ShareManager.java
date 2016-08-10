@@ -17,7 +17,7 @@ public class ShareManager extends BasePlugin {
     @Override
     public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         if (SHARE_WITH_UI.equals(action)) {
-            cordova.getThreadPool().execute(new Runnable() {
+            cordova.getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -46,6 +46,7 @@ public class ShareManager extends BasePlugin {
                         String channelType = obj.getString("channelType");
                         RokoShare share = new RokoShare(cordova.getActivity(), contentId);
                         share.shareCompleteForChannel(RokoShareChannelType.getByString(channelType));
+                        callbackContext.success();
                     } catch (JSONException ex) {
                         callbackContext.error("Parse exception");
                     }

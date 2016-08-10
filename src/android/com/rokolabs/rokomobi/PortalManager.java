@@ -43,7 +43,11 @@ public class PortalManager extends BasePlugin {
                         RokoAccount.setUser(RokoMobi.getInstance().getApplicationContext(), user.userName, user.referralCode, user.shareChannel, new ResponseCallback() {
                             @Override
                             public void success(Response response) {
-                                callbackContext.success();
+                                try {
+                                    callbackContext.success(new JSONObject(response.body));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
 
                             @Override
@@ -87,7 +91,11 @@ public class PortalManager extends BasePlugin {
             RokoAccount.login(cordova.getActivity(), userName, password, new ResponseCallback() {
                 @Override
                 public void success(Response response) {
-                    callbackContext.success();
+                    try {
+                        callbackContext.success(new JSONObject(response.body));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
@@ -128,7 +136,11 @@ public class PortalManager extends BasePlugin {
                         RokoAccount.register(userName, password, email, referralCode, new ResponseCallback() {
                             @Override
                             public void success(Response response) {
-                                callbackContext.success();
+                                try {
+                                    callbackContext.success(new JSONObject(response.body));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
 
                             @Override
