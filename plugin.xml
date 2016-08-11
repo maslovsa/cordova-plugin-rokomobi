@@ -67,6 +67,7 @@
     <!--SHARE SECTION END-->
     <!--PROMO SRCTION START-->
     <source-file src="src/android/com/rokolabs/rokomobi/promo/PromoManager.java" target-dir="src/com/rokolabs/rokomobi/promo"/>
+    <source-file src="src/android/com/rokolabs/rokomobi/promo/PromoCodeFromNotificationModel.java" target-dir="src/com/rokolabs/rokomobi/promo"/>
     <source-file src="src/android/com/rokolabs/rokomobi/promo/MarkPromoCodeAsUsed.java" target-dir="src/com/rokolabs/rokomobi/promo"/>
     <!--PROPMO SECTION END-->
     <!--REFERRAL SECTION END-->
