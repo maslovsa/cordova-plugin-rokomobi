@@ -136,6 +136,9 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.rokolabs.sdk.push.inapp.InAppActivity"
+            android:label="In-App" />
     </config-file>
     
     
