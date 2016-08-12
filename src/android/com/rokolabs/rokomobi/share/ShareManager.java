@@ -22,6 +22,9 @@ public class ShareManager extends BasePlugin {
                 public void run() {
                     try {
                         ShareModel share = gson.fromJson(args.getJSONObject(0).toString(), ShareModel.class);
+                        if(TextUtils.isEmpty(share.contentId)){
+                            callbackContext.error("ContentId field should not be empty");
+                        }
                         RokoShare rokoShare = new RokoShare(cordova.getActivity(), share.contentId);
                         rokoShare.text = share.text;
                         rokoShare.contentURL = share.contentURL;
