@@ -9,6 +9,7 @@ import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.text.TextUtils;
 
 public class ShareManager extends BasePlugin {
     private static final String SHARE_WITH_UI = "shareWithUI";

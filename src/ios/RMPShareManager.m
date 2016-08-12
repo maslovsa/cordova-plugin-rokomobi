@@ -97,20 +97,21 @@ NSString *const kChannelTypeKey = @"channelType";
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Bad params"];
     
     if (params) {
-        ROKOShareChannelType channelType = ROKOShareChannelTypeUnknown;
+        NSString *contentIdString = params[kContentIdKey];
         
+        if (contentIdString && contentIdString.length > 0) {
+            _shareManager.contentId = contentIdString;
+        } else {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"contentId field should be not empty"];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId: self.command.callbackId];
+            return;
+        }
+        
+        ROKOShareChannelType channelType = ROKOShareChannelTypeUnknown;
         NSString *channelTypeString = params[kChannelTypeKey];
         
         if (channelTypeString) {
             channelType = [self shareChannelType:channelTypeString];
-        }
-        
-        NSString *contentIdString = params[kContentIdKey];
-        
-        if (contentIdString) {
-            _shareManager.contentId = contentIdString;
-        } else {
-            _shareManager.contentId = [[NSUUID UUID] UUIDString];
         }
         
         NSError *error = [_shareManager shareCompleteForChannel:channelType];
