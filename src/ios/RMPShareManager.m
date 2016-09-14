@@ -61,13 +61,18 @@ NSString *const kChannelTypeKey = @"channelType";
         }
         
         if (usingUI) {
-            ROKOShareViewController *controller = [ROKOShareViewController buildControllerWithContentId:[[NSUUID UUID] UUIDString]];
+            NSString *contentIdString = params[kContentIdKey];
+            
+            if (!contentIdString) {
+               contentIdString = [[NSUUID UUID] UUIDString];
+            }
+            
+            ROKOShareViewController *controller = [ROKOShareViewController buildControllerWithContentId: contentIdString];
             
             if (params[kDisplayMessageKey]) {
                 controller.displayMessage = params[kDisplayMessageKey];
             }
-            
-            controller.shareManager = _shareManager;
+
             [self.viewController presentViewController:controller animated:YES completion:nil];
         } else {
             ROKOShareChannelType channelType = ROKOShareChannelTypeUnknown;
@@ -89,6 +94,9 @@ NSString *const kChannelTypeKey = @"channelType";
             [_shareManager shareWithChannelType:channelType];
         }
     }
+    
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Done"];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.command.callbackId];
 }
 
 - (void)shareCompleteForChannel:(CDVInvokedUrlCommand *)command {
