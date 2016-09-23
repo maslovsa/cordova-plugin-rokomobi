@@ -9,8 +9,6 @@
 #import <ROKOMobi/ROKOMobi.h>
 #import "EasyMapping.h"
 
-@interface ROKOReferralDiscountItem(ROKOReferralDiscountItemMapper)
-
-+ (EKObjectMapping *)objectMapping;
+@interface ROKOReferralDiscountItem(ROKOReferralDiscountItemMapper) <EKMappingProtocol>
 
 @end
