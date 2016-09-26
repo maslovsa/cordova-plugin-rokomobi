@@ -6,9 +6,11 @@ Plugin allows to integrate with RokoMobi Portal
 
 1) Install npm here - https://nodejs.org/en/
 or run in console 
+
     $ curl https://npmjs.org/install.sh | sh
 
 2) Install Cordova - 
+
     $ npm install -g cordova
 
 ## Using
@@ -26,14 +28,14 @@ Install the plugin
 Edit `www/js/index.js` and add the following code inside `onDeviceReady`
 
 ```js
-        var success = function(message) {
-            alert("Success")
-        }
-        var failure = function(error) {
-            alert("Error calling Roko Plugin" + error);
-        }
-        var dictionary = {userName: "username"}
-        rokomobi.setUser(dictionary, success, failure);
+    var success = function(message) {
+        alert("Success")
+    }
+    var failure = function(error) {
+        alert("Error calling Roko Plugin" + error);
+    }
+    var dictionary = {userName: "username"}
+    rokomobi.setUser(dictionary, success, failure);
 ```
 
 Install iOS or Android platform
