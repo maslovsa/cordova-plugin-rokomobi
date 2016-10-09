@@ -3,6 +3,7 @@ package com.rokolabs.rokomobi;
 import android.app.Activity;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 import com.rokolabs.rokomobi.base.BasePlugin;
 import com.rokolabs.rokomobi.base.User;
@@ -10,8 +11,6 @@ import com.rokolabs.sdk.RokoMobi;
 import com.rokolabs.sdk.account.RokoAccount;
 import com.rokolabs.sdk.http.Response;
 import com.rokolabs.sdk.http.ResponseCallback;
-import com.rokolabs.sdk.share.RokoShare;
-import com.rokolabs.sdk.share.RokoShareViewController;
 
 import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
@@ -30,10 +29,36 @@ public class PortalManager extends BasePlugin {
     private static final String signupUser = "signupUser";
     private static final String getPortalInfo = "getPortalInfo";
     private static final String getSessionInfo = "getSessionInfo";
+    private static final String setUserCustomProperty = "setUserCustomProperty";
 
 
     @Override
     public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        if (setUserCustomProperty.equals(action)) {
+            cordova.getThreadPool().execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        JSONObject obj = args.getJSONObject(0);
+                        String key = obj.getString("key");
+                        String value = obj.getString("newValue");
+                        RokoAccount.setCustomProperty(key, value, new ResponseCallback() {
+                            @Override
+                            public void success(Response response) {
+                                callbackContext.success(gson.toJson(response));
+                            }
+                            @Override
+                            public void failure(Response response) {
+                                callbackContext.error(gson.toJson(response));
+                            }
+                        });
+                    } catch (JSONException e) {
+                        callbackContext.error("Error parse json");
+                    }
+                }
+            });
+            return true;
+        }
         if (setUser.equals(action)) {
             cordova.getThreadPool().execute(new Runnable() {
                 @Override
@@ -52,7 +77,7 @@ public class PortalManager extends BasePlugin {
 
                             @Override
                             public void failure(Response response) {
-                                callbackContext.error(response.code);
+                                callbackContext.error(gson.toJson(response));
                             }
                         });
                     } catch (JSONException ex) {
@@ -68,7 +93,7 @@ public class PortalManager extends BasePlugin {
                 public void run() {
                     com.rokolabs.sdk.account.model.User user = RokoAccount.getLoginUser(cordova.getActivity());
                     if (user != null) {
-                        Map<String, String> result = new HashMap<String, String>();
+                        Map<String, Object> result = new HashMap<String, Object>();
                         result.put("createDate", user.createDate);
                         result.put("email", user.email);
                         result.put("firstLoginTime", user.firstLoginTime);
@@ -79,6 +104,8 @@ public class PortalManager extends BasePlugin {
                         result.put("updateDate", user.updateDate);
                         result.put("username", user.username);
                         callbackContext.success(new JSONObject(result));
+                    } else {
+                        callbackContext.error("User is anonymous");
                     }
                 }
             });
@@ -94,13 +121,13 @@ public class PortalManager extends BasePlugin {
                     try {
                         callbackContext.success(new JSONObject(response.body));
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        callbackContext.error("Error parse json");
                     }
                 }
 
                 @Override
                 public void failure(Response response) {
-                    callbackContext.error(response.code);
+                    callbackContext.error(gson.toJson(response));
                 }
             });
             return true;
@@ -115,7 +142,7 @@ public class PortalManager extends BasePlugin {
 
                 @Override
                 public void failure(Response response) {
-                    callbackContext.error(response.code);
+                    callbackContext.error(gson.toJson(response));
                 }
             });
             return true;
@@ -145,7 +172,7 @@ public class PortalManager extends BasePlugin {
 
                             @Override
                             public void failure(Response response) {
-                                callbackContext.error(response.code);
+                                callbackContext.error(gson.toJson(response));
                             }
                         });
                     } catch (JSONException ex) {
@@ -166,7 +193,7 @@ public class PortalManager extends BasePlugin {
             Map<String, Object> res = new HashMap<String, Object>();
             res.put("sessionKey", RokoMobi.getSettings().getSessionId());
             com.rokolabs.sdk.account.model.User user = RokoAccount.getLoginUser(cordova.getActivity());
-            Map<String, String> resUser = new HashMap<String, String>();
+            Map<String, Object> resUser = new HashMap<String, Object>();
             resUser.put("createDate", user.createDate);
             resUser.put("email", user.email);
             resUser.put("firstLoginTime", user.firstLoginTime);

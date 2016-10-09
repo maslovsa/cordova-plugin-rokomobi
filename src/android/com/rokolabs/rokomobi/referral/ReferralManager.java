@@ -174,7 +174,6 @@ public class ReferralManager extends BasePlugin {
                     RokoInviteFriends.show(cordova.getActivity());
                 }
             });
-
             return true;
         }
         return false;

@@ -45,4 +45,10 @@ NSString *const kApiTokenKey = @"apiToken";
     NSLog(@"%@", error.description);
     [self.commandDelegate sendPluginResult:result callbackId:self.command.callbackId];
 }
+
+- (void)handleBadParamError:(NSString *)description {
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:description];
+    NSLog(@"%@", description);
+    [self.commandDelegate sendPluginResult:result callbackId:self.command.callbackId];
+}
 @end

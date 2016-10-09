@@ -9,4 +9,5 @@
 - (ROKOLinkType)numberToROKOLinkType:(NSNumber *)linkType;
 - (NSDictionary *)dictionaryValue:(NSDictionary *)dictionary forKey:(NSString *)key;
 - (void)handleError:(NSError *)error;
+- (void)handleBadParamError:(NSString *)description;
 @end

@@ -10,5 +10,6 @@
 - (void)getPortalInfo:(CDVInvokedUrlCommand *)command;
 - (void)getSessionInfo:(CDVInvokedUrlCommand *)command;
 - (void)getUserInfo:(CDVInvokedUrlCommand *)command;
+- (void)setUserCustomProperty:(CDVInvokedUrlCommand *)command;
 
 @end

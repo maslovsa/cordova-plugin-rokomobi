@@ -79,6 +79,10 @@ module.exports = {
     getUserInfo: function (param, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "PortalManager", "getUserInfo", [param]);
     },
+    // Param - "newValue", "key", Success - "Set User Custom Property Successful"
+    setUserCustomProperty: function (param, successCallback, errorCallback) {
+        cordova.exec(successCallback, errorCallback, "PortalManager", "setUserCustomProperty", [param]);
+    },
     // Param - Sring of push data, Success - promoCode
     promoCodeFromNotification: function (param, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "PushManager", "promoCodeFromNotification", [param]);

@@ -6,12 +6,15 @@
 #import "ROKOUserObject+ROKOUserObjectMapper.h"
 
 NSString *const kUserNameKey = @"userName";
-NSString *const kPasswordKey = @"type";
+NSString *const kPasswordKey = @"password";
 NSString *const kReferralCodeKey = @"referralCode";
 NSString *const kShareChannelKey = @"shareChannel";
 NSString *const kEmailKey = @"email";
 NSString *const kAmbassadorCodeKey = @"ambassadorCode";
 NSString *const kLinkShareChannel = @"linkShareChannel";
+NSString *const kNewValueKey = @"newValue";
+NSString *const kKey = @"key";
+
 
 @interface RMPPortalManager () {
     ROKOPortalManager *_portalManager;
@@ -74,7 +77,7 @@ NSString *const kLinkShareChannel = @"linkShareChannel";
 }
 
 - (void)logout:(CDVInvokedUrlCommand *)command {
-[self parseCommand:command];
+        [self parseCommand:command];
         __weak __typeof__(self) weakSelf = self;
         
         [_portalManager logoutWithCompletionBlock:^(NSError *_Nullable error) {
@@ -89,7 +92,7 @@ NSString *const kLinkShareChannel = @"linkShareChannel";
 }
 
 - (void)signupUser:(CDVInvokedUrlCommand *)command {
-[self parseCommand:command];
+        [self parseCommand:command];
         NSDictionary *params = command.arguments[0];
         
         if (params) {
@@ -116,7 +119,7 @@ NSString *const kLinkShareChannel = @"linkShareChannel";
 }
 
 - (void)getPortalInfo:(CDVInvokedUrlCommand *)command {
-[self parseCommand:command];
+        [self parseCommand:command];
         __weak __typeof__(self) weakSelf = self;
         
         [_portalManager getPortalInfoWithCompletionBlock:^(ROKOPortalInfo *_Nullable info, NSError *_Nullable error) {
@@ -132,7 +135,7 @@ NSString *const kLinkShareChannel = @"linkShareChannel";
 }
 
 - (void)getSessionInfo:(CDVInvokedUrlCommand *)command {
-[self parseCommand:command];
+        [self parseCommand:command];
         __weak __typeof__(self) weakSelf = self;
         
         [_portalManager getSessionInfoWithCompletionBlock:^(ROKOSessionInfo *_Nullable info, NSError *_Nullable error) {
@@ -149,7 +152,7 @@ NSString *const kLinkShareChannel = @"linkShareChannel";
 }
 
 - (void)getUserInfo:(CDVInvokedUrlCommand *)command {
-[self parseCommand:command];
+        [self parseCommand:command];
         ROKOUserObject *userInfo = [_portalManager userInfo];
 
         if (userInfo) {
@@ -161,4 +164,30 @@ NSString *const kLinkShareChannel = @"linkShareChannel";
             [self.commandDelegate sendPluginResult:result callbackId:self.command.callbackId];
         }
 }
+
+- (void)setUserCustomProperty:(CDVInvokedUrlCommand *)command {
+    [self parseCommand:command];
+    NSDictionary *params = command.arguments[0];
+    
+    if (params) {
+        __weak __typeof__(self) weakSelf = self;
+        
+        NSString *newValue = params[kNewValueKey];
+        NSString *key = params[kKey];
+        
+        if (newValue && key) {
+            [_portalManager setUserCustomProperty:newValue forKey:key completionBlock:^(NSError * _Nullable error) {
+                if (error) {
+                    [weakSelf handleError:error];
+                } else {
+                    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Set User Custom Property Successful"];
+                    [weakSelf.commandDelegate sendPluginResult:result callbackId:weakSelf.command.callbackId];
+                }
+            }];
+        } else {
+            [self handleBadParamError: @"Bad Params - newValue or key are missed"];
+        }
+    }
+}
+
 @end

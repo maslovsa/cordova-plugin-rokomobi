@@ -12,8 +12,8 @@
 @implementation ROKOLink (ROKOLinkMapping)
 
 + (EKObjectMapping *)objectMapping {
-	return [EKObjectMapping mappingForClass:self withBlock:^(EKObjectMapping *mapping) {
-	    [mapping mapPropertiesFromArray:@[@"name", @"shareChannel", @"vanityLink", @"customDomainLink", @"referralCode", @"promoCode"]];
+  return [EKObjectMapping mappingForClass:self withBlock:^(EKObjectMapping *mapping) {
+      [mapping mapPropertiesFromArray:@[@"name", @"shareChannel", @"vanityLink", @"customDomainLink", @"referralCode", @"promoCode", @"settings"]];
 
         [mapping mapKeyPath:@"createDate" toProperty:@"createDate" withDateFormatter:[NSDateFormatter ek_formatterForCurrentThread]];
         [mapping mapKeyPath:@"updateDate" toProperty:@"updateDate" withDateFormatter:[NSDateFormatter ek_formatterForCurrentThread]];
@@ -31,7 +31,7 @@
         }];
         
 
-	}];
+  }];
 }
 
 @end
