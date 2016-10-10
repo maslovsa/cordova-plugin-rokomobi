@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         id="com.rokolabs.rokomobi"
-        version="0.0.4">
+        version="0.0.5">
 
   <name>RokoMobi</name>
 
@@ -12,7 +12,7 @@
   <asset src="www/rokomobi.js" target="js/rokomobi.js"/>
 
   <js-module src="www/rokomobi.js" name="rokomobi">
-    <clobbers target="rokomobi" />
+    <clobbers target="rokomobi"/>
   </js-module>
 
 <platform name="android">

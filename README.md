@@ -49,4 +49,4 @@ Run the code
 
 ## More Info
 
-For more information about RokoMobi integration[the documentation](http://docs.roko.mobi/docs/cordova)
+For more information about RokoMobi integration [the documentation](http://docs.roko.mobi/docs/cordova)
