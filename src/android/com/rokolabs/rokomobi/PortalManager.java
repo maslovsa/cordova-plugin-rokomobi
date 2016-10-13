@@ -3,7 +3,6 @@ package com.rokolabs.rokomobi;
 import android.app.Activity;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.util.Log;
 
 import com.rokolabs.rokomobi.base.BasePlugin;
 import com.rokolabs.rokomobi.base.User;
@@ -42,6 +41,9 @@ public class PortalManager extends BasePlugin {
                         JSONObject obj = args.getJSONObject(0);
                         String key = obj.getString("key");
                         String value = obj.getString("newValue");
+                        if (RokoAccount.getLoginUser(RokoMobi.getInstance().getApplicationContext()).customProperties == null) {
+                            RokoAccount.getLoginUser(RokoMobi.getInstance().getApplicationContext()).customProperties = new HashMap();
+                        }
                         RokoAccount.setCustomProperty(key, value, new ResponseCallback() {
                             @Override
                             public void success(Response response) {
