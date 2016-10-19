@@ -12,8 +12,8 @@ NSString *const kShareChannelKey = @"shareChannel";
 NSString *const kEmailKey = @"email";
 NSString *const kAmbassadorCodeKey = @"ambassadorCode";
 NSString *const kLinkShareChannel = @"linkShareChannel";
-NSString *const kNewValueKey = @"newValue";
-NSString *const kKey = @"key";
+NSString *const kNewValueKey = @"propertyValue";
+NSString *const kKey = @"propertyName";
 
 
 @interface RMPPortalManager () {
