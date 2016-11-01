@@ -39,7 +39,7 @@ public class PortalManager extends BasePlugin {
                 public void run() {
                     try {
                         JSONObject obj = args.getJSONObject(0);
-                        String key = obj.getString("propertyKey");
+                        String key = obj.getString("propertyName");
                         String value = obj.getString("propertyValue");
                         if (RokoAccount.getLoginUser(RokoMobi.getInstance().getApplicationContext()).customProperties == null) {
                             RokoAccount.getLoginUser(RokoMobi.getInstance().getApplicationContext()).customProperties = new HashMap();
