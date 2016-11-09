@@ -68,7 +68,7 @@ NSString *const kChannelTypeKey = @"channelType";
             }
             
             ROKOShareViewController *controller = [ROKOShareViewController buildControllerWithContentId: contentIdString];
-            
+            controller.shareManager = _shareManager;
             if (params[kDisplayMessageKey]) {
                 controller.displayMessage = params[kDisplayMessageKey];
             }
