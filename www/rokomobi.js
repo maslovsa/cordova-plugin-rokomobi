@@ -12,7 +12,7 @@ module.exports = {
     shareWithUI: function (param, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "ShareManager", "shareWithUI", [param]);
     },
-    //Param - "channelType" ["sms", "twitter", "facebook", "email", "copy"]
+    //Param - "channelType" ["sms", "twitter", "facebook", "email", "copy"], "contentId", "linkId"
     shareCompleteForChannel: function (param, successCallback, errorCallback){
         cordova.exec(successCallback, errorCallback, "ShareManager", "shareCompleteForChannel",[param]);
     },
