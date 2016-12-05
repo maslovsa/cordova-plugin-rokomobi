@@ -47,12 +47,30 @@ NSString *const kLinkIdKey = @"linkId";
         _linkManager.delegate = self;
         __weak __typeof__(self) weakSelf = self;
         
+        ROKOLinkType linkType = [params[kTypeKey] intValue];
+        NSString *sourceURL = params[kSourceURLKey];
+        if (sourceURL == (NSString *)[NSNull null] ) {
+            sourceURL = nil;
+        }
+
+        NSString *channelName = params[kChannelNameKey];
+        if (channelName == (NSString *)[NSNull null] ) {
+            channelName = nil;
+        }
+        
+        NSString *sharingCode = params[kSharingCodeKey];
+        if (sharingCode == (NSString *)[NSNull null] ) {
+            sharingCode = nil;
+        }
+        
+        NSDictionary *advancedSettings = params[kAdvancedSettingsKey];
+        
         [_linkManager createLinkWithName:params[kNameKey]
-         type:[params[kTypeKey] intValue]
-         sourceURL:params[kSourceURLKey]
-         channelName:params[kChannelNameKey]
-         sharingCode:params[kSharingCodeKey]
-         advancedSettings:params[kAdvancedSettingsKey]
+         type: linkType
+         sourceURL: sourceURL
+         channelName: channelName
+         sharingCode: sharingCode
+         advancedSettings: advancedSettings
          completionBlock:^(NSString *_Nullable linkURL, NSNumber *_Nullable linkId, NSError *_Nullable error) {
             if (error) {
                 [weakSelf handleError:error];
