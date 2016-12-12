@@ -14,4 +14,6 @@
 @property (nonatomic, copy) NSString *message;
 @property (nonatomic, strong) NSArray <ROKOInstaBotConversationAction *> *actions;
 
+- (BOOL)isTerminalNode;
+
 @end

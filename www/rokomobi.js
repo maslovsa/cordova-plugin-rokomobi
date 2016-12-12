@@ -28,6 +28,10 @@ module.exports = {
     markPromoCodeAsUsed: function (param, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "PromoManager", "markPromoCodeAsUsed", [param]);
     },
+    // Param - Empty, Success - array of objects: "promoCode", "applicability", "startDate", "endDate", "isAlwaysActive", "isSingleUseOnly", "autoApplyOnAppOpen", "cannotBeCombined"
+    loadUserPromoCodes: function (param, successCallback, errorCallback) {
+        cordova.exec(successCallback, errorCallback, "PromoManager", "loadUserPromoCodes", [param]);
+    },
     // Param - Empty, Success - array of objects: "createDate", "updateDate", "value", "limit", "type", "canBeUsed"
     loadReferralDiscountsList: function (param, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "ReferralManager", "loadReferralDiscountsList", [param]);

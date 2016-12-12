@@ -19,23 +19,14 @@
  *
  *  @return Default logger linked to default component manager
  */
-+ (nonnull ROKOLogger *)sharedLogger;
++ (ROKOLogger *)sharedLogger;
 
 /**
- Sends analytic event to ROKO Analytics. Stores message in local db if server is not avaliable
- 
- @param eventTitle      Event name
- @param eventParameters Optional parameters for the event.
- @note Deprecated. Use +addEvent:withParameters: instead
+ *  Sends analytic event to ROKO Analytics. Stores message in local db if server is not avaliable
+ *
+ *  @param eventTitle      Event name
+ *  @param eventParameters Optional parameters for the event. Can be nil.
  */
-- (void)addEvent:(nonnull NSString *)eventTitle withParameters:(nullable NSDictionary *)eventParameters __deprecated_msg("Use +addEvent:withParameters: instead.");
-
-/**
- Sends analytic event to ROKO Analytics. Stores message in local db if server is not avaliable
-
- @param eventTitle      Event name
- @param eventParameters Optional parameters for the event.
- */
-+ (void)addEvent:(nonnull NSString *)eventTitle withParameters:(nullable NSDictionary *)eventParameters;
+- (void)addEvent:(NSString *)eventTitle withParameters:(NSDictionary *)eventParameters;
 
 @end

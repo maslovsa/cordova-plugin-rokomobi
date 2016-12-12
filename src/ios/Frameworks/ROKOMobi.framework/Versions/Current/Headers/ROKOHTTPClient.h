@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "ROKOComponent.h"
 
+
 typedef void (^ROKOHTTPClientCompletion)(id responseObject, NSError *error);
 typedef void (^ROKOHTTPClientCompletionWithURL)( NSURL *url, id responseObject, NSError *error);
 

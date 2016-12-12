@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         id="com.rokolabs.rokomobi"
-        version="0.0.16">
+        version="0.0.23">
 
   <name>RokoMobi</name>
 
@@ -200,13 +200,14 @@
     <source-file src="src/ios/Mappers/ROKOReferralDiscountInfo+ROKOReferralDiscountInfoMapper.m" target-dir="RokoMobi/Mappers"/>
     <header-file src="src/ios/Mappers/ROKOReferralCampaignInfo+ROKOReferralCampaignInfoMapper.h" target-dir="RokoMobi/Mappers"/>
     <source-file src="src/ios/Mappers/ROKOReferralCampaignInfo+ROKOReferralCampaignInfoMapper.m" target-dir="RokoMobi/Mappers"/>
-
     <header-file src="src/ios/Mappers/ROKOPortalInfo+ROKOPortalInfoMapper.h" target-dir="RokoMobi/Mappers"/>
     <source-file src="src/ios/Mappers/ROKOPortalInfo+ROKOPortalInfoMapper.m" target-dir="RokoMobi/Mappers"/>
     <header-file src="src/ios/Mappers/ROKOUserObject+ROKOUserObjectMapper.h" target-dir="RokoMobi/Mappers"/>
     <source-file src="src/ios/Mappers/ROKOUserObject+ROKOUserObjectMapper.m" target-dir="RokoMobi/Mappers"/>
     <header-file src="src/ios/Mappers/ROKOSessionInfo+ROKOSessionInfoMapper.h" target-dir="RokoMobi/Mappers"/>
     <source-file src="src/ios/Mappers/ROKOSessionInfo+ROKOSessionInfoMapper.m" target-dir="RokoMobi/Mappers"/>
+    <header-file src="src/ios/Mappers/ROKOPromoCodeListItem+ROKOPromoCodeListItemMapper.h" target-dir="RokoMobi/Mappers"/>
+    <source-file src="src/ios/Mappers/ROKOPromoCodeListItem+ROKOPromoCodeListItemMapper.m" target-dir="RokoMobi/Mappers"/>
 
     <header-file src="src/ios/EasyMapping/EasyMapping.h" target-dir="RokoMobi/EasyMapping"/>
     <header-file src="src/ios/EasyMapping/EKCoreDataImporter.h" target-dir="RokoMobi/EasyMapping"/>
